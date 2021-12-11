@@ -13,6 +13,7 @@
     "destroy-node": "./cli.js"
   },
   "dependencies": {
-    "chalk": "^5.0.0"
+    "chalk": "^5.0.0",
+    "fs-extra": "^10.0.0"
   }
 }
