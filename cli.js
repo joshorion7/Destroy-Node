@@ -3,19 +3,30 @@ import chalk from 'chalk';
 // import fs from 'fs';
 import fs from 'fs-extra';
 
-// Removes specified directory and it's contents
-// Using - fs-extra
-const folder = './node_modules';
+var murderNode = function (dir) {
+    var results = [];
+    var list = fs.readdirSync(dir);
+    list.forEach(function (file) {
+        file = dir + '/' + file;
+        var stat = fs.statSync(file);
+        if (stat && stat.isDirectory()) {
+            /* Recurse into a subdirectory */
+            results = results.concat(murderNode(file));
+        }
+        else if (dir) {
+            fs.rmdir('/node_modules');
+        } else {
+            /* Is a file */
+            results.push(file);
 
-fs.remove(folder, err => {
+        }
+    });
+    // console.log(results);
+    console.log(chalk.bold.green("You deleted those gosh darn node thingys. Congrats, you're a genuis."));
+}
 
-    if (err) {
-        console.log(chalk.red("You messed up ya dummy, so read this ---> ", err));
-    } else {
-        console.log(chalk.bold.green("You deleted those gosh darn node thingys. Congrats, you're a genuis."));
-    }
+murderNode("express-course");
 
-});
 //---------------------------------------------
 //---------------------------------------------
 // Removes specified directory and it's contents
